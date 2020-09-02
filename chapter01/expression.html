@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：插值与表达式</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="book" />
+        <!-- 1.{{}}是最基本的插值方法，双向绑定的数据 -->
+        <h1>hello: {{book}}</h1>
+        <!-- 2.实时更新数据 -->
+        <p>{{timer}}</p>
+        <!-- 3.直接显示html：v-html -->
+        <span v-html="link"></span><br>
+        <!-- 4.显示{{}}本身  -->
+        <span v-pre>{{这里的括号不编译}}</span><br>
+        <!-- 5.双大括号还可以进行简单的运算.但不支持语句和控制流（如if） -->
+        {{number/10}}
+        {{isOK?'确定':'取消'}}
+        {{text.split('.').reverse().join(',')}}
+
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data:
+            {
+                book: '《Vue.js实战》',
+                timer: new Date(),
+                link: "<a href='https://www.baidu.com'>百度链接</a>",
+                number: 100,
+                isOK: false,
+                text: '123.456'
+            },
+            mounted: function () {
+                var _this = this;//声明一个变量指向Vue实例this，保证作用域一致
+                this.timer = setInterval(function () {
+                    _this.timer = new Date();//修改数据.可以实时地修改双向绑定的数据
+                });
+            },
+            beforeDestroy: function () {
+                if (this.timer) {
+                    clearInterval(this.timer);//Vue销毁前，清除定时器
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
