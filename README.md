@@ -2,10 +2,14 @@
 
 ## 1.入门
 
-1. 入门、数据和变量、生命周期: [chapter01/helloword.html](chapter01/helloword.html)
+1.1. 入门、数据和变量、生命周期: [chapter01/helloword.html](chapter01/helloword.html)
 
-2. 插值与表达式: [chapter01/expression.html](chapter01/expression.html)
+1.2. 插值与表达式: [chapter01/expression.html](chapter01/expression.html)
 
-3. 过滤器: [chapter01/filter.html](chapter01/filter.html)
+1.3. 过滤器: [chapter01/filter.html](chapter01/filter.html)
 
-4. 事件、指令、语法糖: [chapter01/event.html](chapter01/event.html)
+1.4. 事件、指令、语法糖: [chapter01/event.html](chapter01/event.html)
+
+## 2.计算属性
+
+2.1. 简单示例: [chapter02/simple.html](chapter01/simple.html)

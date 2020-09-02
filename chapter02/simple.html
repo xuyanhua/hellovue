@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：计算属性的简单示例</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 用来解决插值中写时可读性差的问题 -->
+        {{text.split(',').reverse().join(',')}}<br>
+        {{reverseText}}
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                text: '123,456'
+            },
+            // 所有的计算属性以函数的形式写在computed选项中
+            computed: {
+                reverseText: function () {
+                    return this.text.split(',').reverse().join(',')
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
