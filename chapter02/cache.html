@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：计算属性的缓存机制</title>
+</head>
+
+<body>
+    <div id="app">
+        {{now}}<br>
+        {{now}}<br>
+        {{now}}<br>
+        {{nowm()}}<br>
+        {{nowm()}}<br>
+        {{nowm()}}
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                //调用多少次就会执行多少次
+                nowm: function () {
+                    console.log("now-method")
+                    return Date.now()
+                }
+            },
+            //和调用次数无关，只要值不变就不会重新计算，依赖于缓存
+            computed: {
+                now: function () {
+                    console.log("now-computed")
+                    return Date.now()
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

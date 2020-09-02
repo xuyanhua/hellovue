@@ -12,6 +12,8 @@
 
 ## 2.计算属性
 
-2.1. 简单示例: [chapter02/simple.html](chapter01/simple.html)
+2.1. 简单示例: [chapter02/simple.html](chapter02/simple.html)
 
-2.2. 计算属性的用法: [chapter02/useage.html](chapter01/useage.html)
+2.2. 计算属性的用法: [chapter02/useage.html](chapter02/useage.html)
+
+2.3. 计算属性的缓存: [chapter02/cache.html](chapter02/cache.html)
