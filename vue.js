@@ -16,7 +16,7 @@
   // These helpers produce better VM code in JS engines due to their
   // explicitness and function inlining.
   function isUndef (v) {
-    return v === undefined || v === null
+    return v === undefined || v === null 
   }
 
   function isDef (v) {
