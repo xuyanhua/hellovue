@@ -13,3 +13,5 @@
 ## 2.计算属性
 
 2.1. 简单示例: [chapter02/simple.html](chapter01/simple.html)
+
+2.2. 计算属性的用法: [chapter02/useage.html](chapter01/useage.html)

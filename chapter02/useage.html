@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：计算属性的用法</title>
+</head>
+
+<body>
+    <div id="app">
+        包裹1：
+        <table>
+            <tr>
+                <td>商品名</td>
+                <td>单价</td>
+                <td>数量</td>
+            </tr>
+            <tr v-for="(item, index) in package1">
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.count}}</td>
+            </tr>
+        </table>
+        包裹2：
+        <table>
+            <tr>
+                <td>商品名</td>
+                <td>单价</td>
+                <td>数量</td>
+            </tr>
+            <tr v-for="(item, index) in package2">
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.count}}</td>
+            </tr>
+        </table>
+        <hr>总价：{{totalPrice}}
+        <p>用户姓名：{{fullName}}</p>
+    </div>
+    <div id="app2">
+        {{reverseText2}}
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                package1: [
+                    {
+                        name: "iPhone7",
+                        price: 7199,
+                        count: 2
+                    },
+                    {
+                        name: "iPad",
+                        price: 2888,
+                        count: 1
+                    }
+                ],
+                package2: [
+                    {
+                        name: "apple",
+                        price: 3,
+                        count: 5
+                    },
+                    {
+                        name: "banana",
+                        price: 2,
+                        count: 10
+                    }
+                ],
+                firstName: 'xu',
+                lastName: 'yanhua',
+                text: '123,456'
+            },
+            computed: {
+                // 1.一个计算属性里可以完成各种复杂的逻辑，只要最终返回一个结果即可。
+                // 如下两个包裹的商品单价或数量有任何变化总价都会变
+                totalPrice: function () {
+                    var totalPrice = 0;
+                    for (var i = 0; i < this.package1.length; i++) {
+                        totalPrice += this.package1[i].price * this.package1[i].count;
+                    }
+                    for (var i = 0; i < this.package2.length; i++) {
+                        totalPrice += this.package2[i].price * this.package2[i].count;
+                    }
+                    return totalPrice;
+                },
+                //2.计算属性中其实有getter和setter两个方法。一般情况下只用getter
+                fullName: {
+                    //用于读取
+                    get: function () {
+                        return this.firstName + " " + this.lastName;
+                    },
+                    // 用于设置
+                    set: function (newValue) {
+                        var names = newValue.split(' ');
+                        this.firstName = names[0];
+                        this.lastName = names[1];
+                    }
+                }
+            }
+        });
+        var app2 = new Vue({
+            el: '#app2',
+            data: {},
+            computed: {
+                // 3.计算属性可以跨vue实例
+                reverseText2: function () {
+                    return app.text.split(',').reverse().join('#');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
