@@ -8,16 +8,35 @@
 <body>
     <div id="app">
         <input type="text" v-model="name" />
-        <h1>{{name}}</h1>
+        <h1>hello: {{name}}</h1>
     </div>
     <script src="../vue.js"></script>
     <script>
-        var app = new Vue({
-            el: "#app",
-            data: {
-                name: ''
+        var person = { name: "haha", age: 12 }
+        var app = new Vue({//实例
+            el: "#app",//页面dom挂载点
+            // data: //数据 
+            // {
+            //     name: ''
+            // }
+            data: person,
+            //2.生命周期
+            created: function () {
+                console.log('create...')
+            },
+            mounted: function () {
+                //第一个业务逻辑会写在这里
+                console.log('mounted...')
+            },
+            beforeDestroy: function () {
+                console.log('beforeDestroy...')
             }
         });
+        //数据可以访问或修改
+        console.log(app.name)
+        app.name = 'world'
+
+
     </script>
 </body>
 
