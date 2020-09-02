@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue实例</title>
+    <script src="vue.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <!--vue实例-->
+    <!--监控数据变化-->
+    <div id="app1">
+        {{message}}<br />
+        <input v-model="name" />
+    </div>
+    <script>
+        var app1 = new Vue({
+            el: "#app1",
+            data: {
+                name: "haha",
+                message: "输入框长成是" + name.length
+            },
+            beforeCreate: function () {
+                console.info("beforeCreate .")
+            }, created: function () {
+                console.info("create .")
+            }, beforeMount: function () {
+                console.info("beforeMount .")
+            }, mounted: function () {
+                console.info("mounted .")
+            },beforeUpdate: function () {
+                console.info("beforeUpdate .")
+            },updated: function () {
+                console.info("updated .")
+            },activated: function () {
+                console.info("activated .")
+            },deactivated: function () {
+                console.info("deactivated .")
+            },beforeDestroy: function () {
+                console.info("beforeDestroy .")
+            },destroyed: function () {
+                console.info("destroyed .")
+                alert('123');
+            }
+        });
+        app1.$watch('name', function (newValue, oldValue) {
+            this.message = "输入框长成是" + newValue.length
+        });
+
+    </script>
+</body>
+
+</html>

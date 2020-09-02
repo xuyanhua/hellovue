@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板语法</title>
+    <script src="vue.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div id="app1">
+        <!--插值-->
+        <!--双括号，即mustaches语法-->
+        <span>message:{{msg}}</span><br>
+        <!--用v-once指令只显示一次不再更新-->
+        <span v-once>message(only once):{{msg}}</span>
+        <hr>
+        <!--使用v-html指定可以显示原生的html-->
+        <p>using mustaches:{{rawHtml}}</p>
+        <p>using v-html directive:<span v-html="rawHtml"></span></p>
+        <!--mustaches语法不能作用在属性上，属性需要使用v-bind指令-->
+        <div v-bind:id="dynamicId">dynamicId</div>
+        <!--对于布尔值的属性有些不同-->
+        <button v-bind:disabled="isButtonDisabled">Button</button>
+        <!--js表达式-->
+        {{number+1}}、{{ok?'YES':'NO'}}、
+        {{message.split(' ').reverse().join(' ')}}
+        <div v-bind:id="'list-'+id">aaa</div>
+
+        <!--指令-->
+        <!-- v- 开头的为指令：例如v-if v-bind v-html -->
+        <div v-if="seen">看到了</div>
+        <!--一些指令可以接收一些参数，例如v-bind:href="..." href就是参数-->
+        <!--又如 v-on:click="doSomething"-->
+        <a v-bind:href="durl" target="_blank">baidu</a>
+        <!--动态参数 从 2.6.0 开始，可以用方括号括起来的 JavaScript 表达式作为一个指令的参数-->
+        <a v-bind:[attr]="attrv">{{atext}}</a>
+        <!--修饰符 prevent阻止事件传播-->
+        <form v-on:submit.prevent="onSubmit">...</form>
+        <!--缩写 v-bind:href :href-->
+        <a :href="url">urll</a>
+        <a @click="doSomething">点我</a>
+    </div>
+    <script>
+        var app1 = new Vue({
+            el: "#app1",
+            data: {
+                msg: "hello !",
+                rawHtml: "<span style='color:red;'>This should be red.</span>",
+                dynamicId: 123,
+                isButtonDisabled: true,
+                number: 2,
+                ok: true,
+                message: "nice to meet you.",
+                id: "aaa",
+                seen: true,
+                durl:"http://www.baidu.com",
+                attr:"style",
+                // attr:null,
+                attrv:"color:blue;",
+                atext:"这是蓝色",
+                url:"http://www.sogou.com"
+            },
+            methods:{
+                doSomething:function(){
+                    alert(123);
+                },
+            }
+        });
+    </script>
+</body>
+
+</html>
