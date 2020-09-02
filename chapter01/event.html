@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：事件</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 指令是Vue.js模板中最常用的一项功能，用v-前缀来表示。例如v-if v-html v-pre -->
+        <!-- v-if 当show为true时p元素会被插入，false时移除。 -->
+        <p v-if="show">显示这段文本</p>
+        <!-- v-bind 动态更新html元素上的属性 -->
+        <a v-bind:href="url">{{title}}</a><br>
+        <img v-bind:src="imgUrl" /><br>
+        <!-- v-on 绑定监听事件 例如：v-on:click v-on:keydown v-on:mouseover -->
+        <!-- 表达式可以是方法名，方法名写在methods中，可以直接用this.来访问data中的数据 -->
+        <button v-on:click="handleShow">切换显隐</button>
+        <!-- 表达式也可以是内联语句 -->
+        <button v-on:click="show = false">隐藏按钮</button>
+        <button v-on:click="handleSite">切换网站</button>
+        <!-- v-bind可以缩写为:attr -->
+        <ul :type="ultype">
+            <li>第一项</li>
+            <li>第二项</li>
+        </ul>
+        <!-- v-on可以用@代替 -->
+        <button @click="alert('123')">点下试试</button>
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                show: true,
+                url: "http://www.baidu.com",
+                title: "百度",
+                imgUrl: 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png',
+                ultype: 'disc'
+            },
+            methods: {
+                handleShow: function () {
+                    this.show = !this.show;
+                },
+                handleSite: function () {
+                    if (this.title == '百度') {
+                        this.url = 'https://www.google.com';
+                        this.title = '谷歌'
+                        this.imgUrl = 'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
+                    } else if (this.title == '谷歌') {
+                        this.url = "http://www.baidu.com";
+                        this.title = "百度";
+                        this.imgUrl = 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png';
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
