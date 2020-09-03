@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：基本指令与条件渲染指令</title>
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1. v-cloak 它会在Vue实例结束编译时从绑定的html元素上移除，经常配合css样式display:none使用 -->
+        <!-- 用以解决由于网速慢，vue加载慢等原因造成的页面上出现{{xxx}}闪动的问题 -->
+        <!-- 一般情况下，v-cloak是解决初始化慢导致的页面闪动的最佳实践，对于简单的项目很实用 -->
+        <!-- 但在webpack或vue-router项目中，由于项目里只有一个空的div元素，剩余的内容都是由路由去挂载
+            不同组件完成的，所以不再需要v-cloak -->
+        <h1 v-cloak>{{message1}}</h1>
+        <!-- 2. v-once 它的作用是定义它的元素或组件只渲染一次，包括元素或组件的所有子节点。
+        一般很少使用，当需要进一步优化性能时可能会用到 -->
+        <h1 v-once>{{message2}}</h1>
+        <!-- 3. 条件指令v-if v-else-if v-else，三者要紧跟 -->
+        <!-- 当条件为真时显示，当条件为假时移除 -->
+        <p v-if="status==1">当status为1时显示</p>
+        <p v-else-if="status==2">当status为2时显示</p>
+        <p v-else>否则显示该行</p>
+        <input v-model="status">
+        <!-- 如果一次判断的是多个元素，可在template元素上使用条件指令，而template标签本身不会渲染u65r -->
+        <template v-if="status == 1">
+            <p>这是一段文本</p>
+            <p>这是一段文本</p>
+            <p>这是一段文本</p>
+        </template>
+        <!-- 4.默认情况下，input中的值是不变的，即可以复用已有元素input -->
+        <!-- 可以加上key属性来禁用复用 -->
+        <template v-if="type == 'name'">
+            <label>用户名：</label>
+            <input placeholder="请输入用户名" key="name">
+        </template>
+        <template v-else-if="type == 'email'">
+            <label>邮箱：</label>
+            <input placeholder="输入邮箱" key="email">
+        </template>
+        <button @click="handleToggleClick">切换登录方式</button>
+        <!-- 5. v-show 当为假时，会添加一个display:none的样式 -->
+        <!-- 6.v-if 与 v-show
+            相同点：两者都有控制元素显隐的功能
+            不同点：v-if才是真正的条件渲染，v-show只会切换样式。
+            v-if更适合条件不经常改变的场景（因为渲染的开销大），v-show适用频繁切换的条件 -->
+        <p v-show="status===1">当status为1时显示</p>
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message1: '1. v-cloak',
+                message2: '2. v-once',
+                status: 1,
+                type: 'name'
+            },
+            methods: {
+                handleToggleClick: function () {
+                    this.type = this.type == 'name' ? 'email' : 'name';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

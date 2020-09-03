@@ -21,3 +21,7 @@
 ## 3.绑定样式
 
 3.1. 绑定样式: [chapter03/bindclass.html](chapter03/bindclass.html)
+
+## 4.内置指令
+
+4.1. 基本指令与条件渲染指令：[chapter04/base-if.html](chapter04/base-if.html)
