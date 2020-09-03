@@ -29,3 +29,7 @@
 4.2. 列表渲染指令v-for与数组操作：[chapter04/for.html](chapter04/for.html)
 
 4.3. 方法与事件、修饰符：[chapter04/event.html](chapter04/event.html)
+
+## 5.表单与v-model
+
+5.1. 表单：[chapter05/form.html](chapter05/form.html)

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1.input 输入框 -->
+        <!-- 使用v-model后，表单控件显示的值只依赖所绑定的数据，不再关心初始化时的value属性 -->
+        <input v-model="message" />
+        <p>输入内容：{{message}}</p>
+        <!-- 2.textarea 文本框 -->
+        <textarea v-model="text"></textarea>
+        <p>输入内容：{{text}}</p>
+        <hr>
+
+        <!-- 3. 单选框-->
+        <!-- 3.1 单独使用：radio单独使用时不需要v-model，只需要bind一个checked -->
+        <input type="radio" :checked="picked" />
+        <label>单选按钮</label><br><br>
+        <!-- 3.2 组合使用：当组合使用实现互斥选择效果时，需要v-model配合value使用 -->
+        <input type="radio" v-model="picked1" value="html" id="html">
+        <label for="html">HTML</label>
+        <br>
+        <input type="radio" v-model="picked1" value="js" id="js">
+        <label for="js">JavaScript</label>
+        <br>
+        <input type="radio" v-model="picked1" value="css" id="css">
+        <label for="css">CSS</label>
+        <br>
+        选择的是：{{picked1}}
+        <hr>
+
+        <!-- 4. 复选框 -->
+        <!-- 4.1 单独使用，使用v-model绑定 -->
+        <input type="checkbox" v-model="checked" id="checked" />
+        <label for="checked">复选按钮</label><br><br>
+        <!-- 4.2 组合使用 -->
+        <input type="checkbox" v-model="checked1" value="html1" id="html1">
+        <label for="html1">HTML</label>
+        <br>
+        <input type="checkbox" v-model="checked1" value="js1" id="js1">
+        <label for="js1">JavaScript</label>
+        <br>
+        <input type="checkbox" v-model="checked1" value="css1" id="css1">
+        <label for="css1">CSS</label>
+        <br>
+        选择的是：{{checked1}}
+        <hr>
+
+        <!-- 5.下拉列表 -->
+        <!-- 5.1 单选，如果option有value值，则选择时优先使用value值，否则使用option中间的text -->
+        <select v-model="selected">
+            <option>html</option>
+            <option value="js">JavaScript</option>
+            <option>css</option>
+        </select><br><br>
+        <!-- 5.2 复选 -->
+        <select v-model="selected1" multiple>
+            <option>html</option>
+            <option value="js">JavaScript</option>
+            <option>css</option>
+        </select>
+        <p>选择的是：{{selected1}}</p>
+        <!-- 5.3 下拉项的动态输出 -->
+        <select v-model="selected2">
+            <option v-for="option in options" :value="option.value">{{option.text}}</option>
+        </select><br><br>
+        <hr>
+
+        <!-- 6.绑定值。上面介绍的单选按钮、复选框和下拉列表在单独使用或单选模式下，v-model绑定的值是一个静态
+            字符串或布尔值，但在业务中，有时需要绑定一个动态的数据，这时可以用v-bind来实现 -->
+        <!-- 6.1 选中时，rpicked和rvalue都是123 -->
+        <input type="radio" v-model="rpicked" :value="rvalue">
+        <label>单选按钮</label>
+        <p>{{rpicked}}</p>
+        <p>{{rvalue}}</p>
+        <hr>
+        <input type="checkbox" v-model="toggle" :true-value="cvalue1" :false-value="cvalue2">
+        <label>复选框</label>
+        <p>{{toggle}}</p>
+        <p>{{cvalue1}}</p>
+        <p>{{cvalue2}}</p>
+        <hr>
+        <!-- 此时select是一个对象，选中时是 app.selected.number ===  -->
+        <select v-model="selected3">
+            <option v-for="option in options" :value="{number:option.value}">{{option.text}}</option>
+        </select>
+        {{selected3.number}}
+        <hr>
+
+        <!-- 7.修饰符 -->
+        <!-- 7.1 .lazy ,使用lazy后变为在change事件中更新数据，会在失焦或回车时才更新-->
+        <input type="text" v-model.lazy="messagelazy">
+        <p>{{messagelazy}}</p>
+        <!-- 7.2 .number可以自动将字符串转为数字 -->
+        <input type="number" v-model.number="number">
+        <p>{{number}}-{{typeof number }}</p>
+        <!-- 7.3 .trim可以自动去除空格 -->
+        <input type="text" v-model.trim="str">
+        <p>'{{str}}'</p>
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: '',
+                text: '',
+                picked: false,
+                picked1: 'js',
+                checked: true,
+                checked1: ['js1'],
+                selected: 'js',
+                selected1: ['js1'],
+                options: [
+                    { text: 'HTML', value: 'html' },
+                    { text: 'JavaScript', value: 'js' },
+                    { text: 'CSS', value: 'css' },
+                    { text: 'Java', value: 'java' }
+                ],
+                selected2: 'java',
+                rpicked: false,
+                rvalue: 123,
+                toggle: false,
+                cvalue1: 'a',
+                cvalue2: 'b',
+                selected3: '',
+                messagelazy: '',
+                number: 123,
+                str: 'abc'
+            }
+        });
+    </script>
+</body>
+
+</html>
