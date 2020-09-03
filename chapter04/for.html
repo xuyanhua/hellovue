@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：for指令</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1. v-for指令，循环数组，可以用of代替in -->
+        <ul>
+            <li v-for="book in books">{{book}}</li>
+        </ul>
+        <!-- 2. 在in前面用括号，可以获取索引(book,index) in books -->
+        <ul>
+            <li v-for="(book,index) in books">{{index}}--{{book}}</li>
+        </ul>
+        <!-- 3.作用在template标签上 -->
+        <template v-for="(book,index) in books2">
+            <li>书名：{{book.name}}</li>
+            <li>作者：{{book.author}}</li>
+        </template>
+        <!-- 4.对象也能遍历 -->
+        <span v-for="u in user">{{u}},</span><br>
+        <!-- 5.对象也有两个可选参数，key和index -->
+        <li v-for="(u,key,index) in user">{{index}}--{{key}}:{{u}}</li><br>
+        <!-- 6.v-for可以迭代整数 -->
+        <span v-for="n of 10">{{n}},</span>
+        <!-- 7.数组更新 -->
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                books: ['葵花宝典', '乾坤大挪移', '六脉神剑'],
+                books2: [
+                    {
+                        'name': '葵花宝典',
+                        'author': '一名太监'
+                    }, {
+                        'name': '乾坤大挪移',
+                        'author': '杨顶天'
+                    }, {
+                        'name': '六脉神剑',
+                        'author': '大理氏'
+                    }],
+                user: {
+                    name: 'xuyh',
+                    gender: 'male',
+                    age: 18
+                },
+                books3: [
+                    {
+                        'name': '独孤九剑',
+                        'author': '独孤前辈'
+                    }
+                ]
+            },
+        });
+        //7.1 向数组的末尾添加一个或多个元素，并返回新的长度
+        app.books2.push({
+            'name': '九阴白骨爪',
+            'author': '殷天正'
+        });
+        // 7.2 pop()方法用于删除并返回数组的最后一个元素
+        // app.books2.pop();
+        //7.3 shift()方法用于把数组的第一个元素从其中删除，并返回第一个元素的值
+        app.books2.shift();
+        // 7.4 unshift()方法可向数组的开头添加一个或多个元素，并返回新的长度
+        app.books2.unshift({
+            'name': '九阴白骨爪',
+            'author': '殷天正'
+        })
+        //7.5 sort()方法用于对数组的元素进行排序。
+        app.books2.sort(function (a, b) {
+            a.name > b.name
+        })
+        //7.6 reverse()方法用于颠倒数组中元素的顺序。
+        app.books2.reverse();
+        //7.7(不会改变原数组) 过滤 替换的过程中，会最大限度的复用现有Dom，不用担心性能问题
+        app.books2 = app.books2.filter(function (a) {
+            return a.name.match(/九/);
+        })
+        // 7.8(不会改变原数组) 连接两个数组
+        app.books2 = app.books2.concat(app.books3)
+        //7.9 通过索引设置值
+        // splice(index,len,[item])它也可以用来替换/删除/添加数组内某一个或者几个值（该方法会改变原始数组）
+        //index:数组开始下标       
+        //len: 替换/删除的长度       
+        //item:替换的值，删除操作item为空
+        // 注意不要直接使用app.books2[1]=xxx，这样vue是检测不到的
+        //添加
+        app.books2.splice(1, 0, {
+            'name': '小无象功',
+            'author': '逍遥派'
+        })
+        //替换
+        app.books2.splice(1, 1, {
+            'name': '北冥神功',
+            'author': '逍遥子'
+        })
+        //删除
+        app.books2.splice(1, 1)
+        //8 过滤与排序，如果不想改变原数组，可以使用计算属性
+    </script>
+</body>
+
+</html>

@@ -25,3 +25,5 @@
 ## 4.内置指令
 
 4.1. 基本指令与条件渲染指令：[chapter04/base-if.html](chapter04/base-if.html)
+
+4.2. 列表渲染指令v-for与数组操作：[chapter04/for.html](chapter04/for.html)
