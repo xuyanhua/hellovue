@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：绑定样式</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1.使用v-bind:class=""或简写形式:class=""来绑定class -->
+        <!-- 下面的编译后是class="active" -->
+        <div :class="{'active':isActive}">1</div>
+        <div :class="{'active':isActive,'error':isError}">1</div>
+        <!-- 2.可以和静态属性在一起： -->
+        <div class="static" :class="{'active':isActive,'error':isError}">2</div>
+        <!-- 3.也可以用计算属性 -->
+        <div :class="classes">3</div>
+        <!-- 4.也可以用数组 -->
+        <div :class="[activeCls,errorCls]">4</div>
+        <!-- 5.数组中可以使用三元运算符 -->
+        <div :class="[isActive?activeCls:'',errorCls]">5</div>
+        <!-- 6.数组中可以使用对象 -->
+        <div :class="[{'active':isActive},errorCls]">6</div>
+        <!-- 7.复杂写法 -->
+        <div :class="classes2">7</div>
+        <!-- 8.在组件中应用 todo -->
+        <!-- 9.绑定内联样式 内联样式名称可以用驼峰或短横分隔-->
+        <div :style="{'color':color,'fontSize':fontSize+'px'}">9</div>
+        <!-- 10.内联也可以全写在data中 -->
+        <div :style="styles">10</div>
+
+    </div>
+    <script src="../vue.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                isActive: false,
+                isError: true,
+                activeCls: 'active',
+                errorCls: 'error',
+                disabled: true,
+                size: 'normal',
+                color: 'red',
+                fontSize: 24,
+                styles: {
+                    color: 'red',
+                    fontSize: 24,
+                    backgroundColor: 'yellow'
+                }
+            },
+            computed: {
+                classes: function () {
+                    return {
+                        active: true,
+                        error: true,
+                        thirdClass: true
+                    }
+                },
+                classes2: function () {
+                    // btn始终应用
+                    // 当size不为空时，后加size的值
+                    // 当disable为真时应用btn-disabled
+                    return [
+                        'btn', {
+                            ['btn-' + this.size]: this.size !== '',
+                            ['btn-disabled']: this.disabled
+                        }
+                    ]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

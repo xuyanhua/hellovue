@@ -17,3 +17,7 @@
 2.2. 计算属性的用法: [chapter02/useage.html](chapter02/useage.html)
 
 2.3. 计算属性的缓存: [chapter02/cache.html](chapter02/cache.html)
+
+## 3.绑定样式
+
+3.1. 绑定样式: [chapter03/bindclass.html](chapter03/bindclass.html)
