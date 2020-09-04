@@ -41,3 +41,5 @@
 6.1. 组件基本用法：[chapter06/base.html](chapter06/base.html)
 
 6.2. 使用props传递数据：[chapter06/props.html](chapter06/props.html)
+
+6.3. 子组件向父组件传递数据：[chapter06/child2parent.html](chapter06/child2parent.html)

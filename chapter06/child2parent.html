@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：组件通信之子组件向父组件通信</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- 子组件用$emit()来触发事件，父组件用$on()来监听子组件的事件 -->
+        <!-- 父组件也可以直接大子组件的自定义标签上使用v-on来监听子组件触发的自定义事件 -->
+        {{total}}
+        <!-- 2.通过v-on来接收事件，v-on监听的事件的名称即emit方法的自定义事件的名字 -->
+        <!-- 3.v-on也可以监听dom事件，使用.native修饰符表示监听一个原生事件，监听的是该组件的根元素 -->
+        <my-component @increase='handleGetTotal' @reduce='handleGetTotal' v-on:click.native='handleClick'>
+        </my-component>
+        <!-- 4.如果事件名称是input，则可以直接用v-model来绑定，这其实是一个语法糖，相当于@input="xxx" -->
+        <my-component v-model='total'></my-component>
+        <my-component @input='handleGetTotal'></my-component>
+        <br><br><br>
+        <!-- 5.实现双向绑定的v-model。组件要接收一个value属性；在有新的value时触发input事件 -->
+        <my-component1 v-model='total'></my-component1>
+        <button @click="handleReduce">-1</button>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        Vue.component('my-component', {
+            template: '\
+            <div>\
+                <button @click="handleIncrease">+1</button>\
+                <button @click="handleReduce">-1</button>\
+            </div>',
+            data: function () {
+                return {
+                    counter: 0
+                }
+            },
+            methods: {
+                handleIncrease: function () {
+                    this.counter++;
+                    // 1.通过emit触发事件
+                    this.$emit('increase', this.counter);
+                    this.$emit('input', this.counter);
+                },
+                handleReduce: function () {
+                    this.counter--;
+                    this.$emit('reduce', this.counter);
+                    this.$emit('input', this.counter);
+                },
+            }
+        });
+        Vue.component('my-component1', {
+            props: ['value'],
+            template: '<input :value="value" @input="updateValue">',
+            methods: {
+                updateValue: function (event) {
+                    // 通过emit触发事件
+                    this.$emit('input', event.target.value);
+                }
+            }
+        });
+        var app = new Vue({
+            el: "#app",
+            data: {
+                total: 0
+            },
+            methods: {
+                handleGetTotal: function (total) {
+                    this.total = total
+                },
+                handleClick: function () {
+                    console.info('组件被点击.')
+                },
+                handleReduce: function () {
+                    this.total--;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
