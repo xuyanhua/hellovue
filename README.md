@@ -30,6 +30,8 @@
 
 4.3. 方法与事件、修饰符：[chapter04/event.html](chapter04/event.html)
 
+4.4. 实战：购物车：[chapter04/cart](chapter04/cart)
+
 ## 5.表单与v-model
 
 5.1. 表单：[chapter05/form.html](chapter05/form.html)
