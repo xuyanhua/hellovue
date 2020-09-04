@@ -45,3 +45,6 @@
 6.3. 子组件向父组件传递数据：[chapter06/child2parent.html](chapter06/child2parent.html)
 
 6.4. 任意组件的通信（非父子组件）：[chapter06/any.html](chapter06/any.html)
+
+6.5. 使用slot（插槽）分发内容：[chapter06/slot.html](chapter06/slot.html)
+props传递数据、events触发事件和slot内容分发就构成了Vue组件的3个API来源，再复杂的组件也是由这3部分构成的。

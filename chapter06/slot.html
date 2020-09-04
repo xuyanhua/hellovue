@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：使用slot分发内容</title>
+</head>
+<!-- 当需要让组件组合使用，混合父组件的内容与子组件的模板时，就会用到slot，这个过程叫作内容分发（transclusion） -->
+
+<body>
+    <div id="app">
+        <child-component>
+            <!-- 1.在组件中插入内容 -->
+            <p>分发的内容</p>
+            <p>更多分发发的内容</p>
+        </child-component>
+        <hr>
+        <!-- 2.具名slot -->
+        <child-component1>
+            <h2 slot="header">标题</h2>
+            <p>正文内容</p>
+            <p>更多正文内容</p>
+            <div slot="footer">底部消息</div>
+        </child-component1>
+        <hr>
+        <!-- 3.作用域插槽 -->
+        <!-- the "scope" attribute for scoped slots have been deprecated and replaced by "slot-scope" since 2.5. The new "slot-scope" attribute can also be used on plain elements in addition to <template> to denote scoped slots. -->
+        <!-- scope属性已过期，替换为slot-scope -->
+        <child-component2>
+            <template slot-scope="props">
+                <p>来自父组件的内容</p>
+                <p>{{props.msg}}</p>
+            </template>
+        </child-component2>
+        <br>
+        <hr>
+        <!-- list组件  -->
+        <my-list :books="books">
+            <template slot="book" slot-scope="props">
+                <li>{{props.bookName}}</li>
+            </template>
+        </my-list>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        Vue.component('child-component', {
+            //1. 这里的slot节点定义插入的位置
+            template: '<div>\
+                        <slot>\
+                            <p>如果没有插入内容，我将作为默认出现</p>\
+                        </slot>\
+                    </div>',
+        });
+        // 2.具名slot
+        Vue.component('child-component1', {
+            // 这里的slot节点定义插入的位置
+            // 没有全名的slot为默认slot，没有指定slot属性的内容都会出现在这里
+            template: '<div class="container">\
+                        <div class="header"><slot name="header"></slot></div>\
+                        <div class="main"><slot></slot></div>\
+                        <div class="footer"><slot name="footer"></slot></div>\
+                    </div>',
+            mounted: function () {
+                // 4.插槽的访问
+                console.info(this.$slots.header)
+                console.info(this.$slots.footer)
+                console.info(this.$slots.default)
+            }
+        });
+        // 3.作用域插槽，在子组件的slot插槽上加上属性，可以在父组件中通过scope指定的变量名访问
+        Vue.component('child-component2', {
+            template: '<div class="container">\
+                <slot msg="来自子组件的内容"></slot>\
+                </div>'
+        })
+        // 3.1 作用域插槽在list组件中的使用
+        Vue.component('my-list', {
+            props: {
+                books: {
+                    type: Array,
+                    default: function () {
+                        return [];
+                    }
+                }
+            },
+            template: '<ul>\
+                <slot name="book"\
+                    v-for="book in books"\
+                    :book-name="book.name">\
+                    </slot>\
+                </ul>'
+        });
+        var app = new Vue({
+            el: "#app",
+            data: {
+                books: [
+                    { name: '《Vue.js实战》' },
+                    { name: '《JavaScript语言精粹》' },
+                    { name: '《JavaScript高级程序设计》' },
+                ]
+            }
+        });
+    </script>
+</body>
+
+</html>
