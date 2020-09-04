@@ -6,15 +6,18 @@ var app = new Vue({
             {
                 name: 'iPhone',
                 price: 5188,
-                count: 1
+                count: 1,
+                selected: false
             }, {
                 name: 'iPad',
                 price: 4888,
-                count: 1
+                count: 1,
+                selected: false
             }, {
                 name: 'MacbookPro',
                 price: 21888,
-                count: 1
+                count: 1,
+                selected: false
             }
         ]
     },
@@ -31,11 +34,21 @@ var app = new Vue({
         handleRemove: function (index) {
             this.list.splice(index, 1)
         },
+        handleSelectAll: function () {
+            for (i in this.list) {
+                this.list[i].selected = this.selectAll
+            }
+        },
         handleSelect: function () {
-            // for (i in this.list) {
-            //     this.list[i].selected = this.selectAll
-            // }
-        }
+            var all = true;
+            for (i in this.list) {
+                if (!this.list[i].selected) {
+                    all = false;
+                    break;
+                }
+            }
+            this.selectAll = all;
+        },
     },
     computed: {
         totalPrice: function () {
