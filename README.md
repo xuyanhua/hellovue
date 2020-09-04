@@ -35,3 +35,7 @@
 ## 5.表单与v-model
 
 5.1. 表单：[chapter05/form.html](chapter05/form.html)
+
+## 6.组件详解
+
+6.1. 组件基本用法：[chapter06/base.html](chapter06/base.html)
