@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：使用props传递数据</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-component1 msg='来自父组件的数据'></my-component1><br>
+        <my-component2 warning-text='警告信息'></my-component2><br>
+        <!-- 1.3 来自父组件的动态数据 -->
+        <my-component3 :message='parentMessage'></my-component3>
+        <input v-model="parentMessage"><br><br>
+        <my-component4 :init-count='1'></my-component4><br><br>
+        <my-component5 :width='160'></my-component5><br><br>
+
+        <my-component6 :prop-a='123' prop-b='hello' prod-c='false' :prop-d='123' :prop-e='[1,2,3]' :prop-f='12'>
+        </my-component6><br><br>
+
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        Vue.component('my-component1', {
+            template: '<div>{{msg}}</div>',
+            //1. 通过props来接收父组件的数据
+            // 1.1 第1种是通过数组来接收
+            props: ['msg'],
+        });
+        Vue.component('my-component2', {
+            template: '<div>{{warningText}}</div>',
+            // 1.2 在定义时变量的全名用驼峰，使用的地方用-，因为html中不区分大小写
+            props: ['warningText'],
+        });
+        Vue.component('my-component3', {
+            template: '<div>{{message}}</div>',
+            props: ['message']
+        });
+        // 2.单向数据流：为了将子组件与父组件解耦，props只能从父组件向子组件传递
+        // 2.1 如果父组件的数据不想被改变，则可以在子组件中的data中复制一个副本来操作数据
+        Vue.component('my-component4', {
+            template: '<div>{{count}}</div>',
+            props: ['initCount'],
+            data: function () {
+                return {
+                    count: this.initCount + 10
+                }
+            }
+        });
+        // 2.2 如果父组件想要子组件修改其数据的值，则直接引用 
+        Vue.component('my-component5', {
+            template: '<div :style="style">组件内容</div>',
+            props: ['width'],
+            computed: {
+                style: function () {
+                    return {
+                        width: this.width + 'px',
+                        height: this.width / 2 + 'px',
+                        border: '1px solid #000'
+                    }
+                }
+            }
+        });
+        //3. 使用对象接收父组件的数据，使用在要对数据进行验证的场景
+        Vue.component('my-component6', {
+            template: '<div>测试对象接收数据</div>',
+            props: {
+                propA: Number,
+                propB: [String, Number],
+                propC: {
+                    type: Boolean,
+                    default: true
+                },
+                propD: {
+                    type: Number,
+                    required: true
+                },
+                propE: {
+                    type: Array,
+                    default: function () {
+                        return []
+                    }
+                },
+                propF: {
+                    validator: function (value) {
+                        return value > 10
+                    }
+                }
+            },
+            mounted: function () {
+                console.log('propA:' + this.propA)
+                console.log('propB:' + this.propB)
+                console.log('propC:' + this.propC)
+                console.log('propD:' + this.propD)
+                console.log('propE:' + this.propE)
+                console.log('propF:' + this.propF)
+            }
+        });
+        var app = new Vue({
+            el: "#app",
+            data: {
+                parentMessage: '来自父组件的动态数据'
+            }
+        });
+    </script>
+</body>
+
+</html>

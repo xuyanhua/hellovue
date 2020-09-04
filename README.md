@@ -39,3 +39,5 @@
 ## 6.组件详解
 
 6.1. 组件基本用法：[chapter06/base.html](chapter06/base.html)
+
+6.2. 使用props传递数据：[chapter06/props.html](chapter06/props.html)
