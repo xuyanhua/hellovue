@@ -43,3 +43,5 @@
 6.2. 使用props传递数据：[chapter06/props.html](chapter06/props.html)
 
 6.3. 子组件向父组件传递数据：[chapter06/child2parent.html](chapter06/child2parent.html)
+
+6.4. 任意组件的通信（非父子组件）：[chapter06/any.html](chapter06/any.html)

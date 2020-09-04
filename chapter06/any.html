@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：任意组件的通信</title>
+</head>
+
+<body>
+    <div id="app">
+        {{message}}
+        <my-component></my-component>
+        <br>
+        <!-- 3.在父组件模板中，子组件标签上使用ref指定一个名称，并在父组件内通过this.$refs来访问指定名称的子组件 -->
+        <!-- $refs只在组件渲染完成后才填充，并且它是非响应式的。它仅仅作为一个直接访问子组件的应急方案，应当避免在
+        模板或计算属性中使用$refs -->
+        <my-component1 ref='comA'></my-component1>
+        <button @click='handleRef'>获取子组件的内容</button>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        // 1.消息总线
+        var bus = new Vue();
+        Vue.component('my-component', {
+            template: '<button @click="handleEvent">子组件的按钮</button>',
+            methods: {
+                handleEvent: function () {
+                    bus.$emit('on-message', '来自子组件的消息')
+                }
+            }
+        });
+        Vue.component('my-component1', {
+            template: '<div>子组件</div>',
+            data: function () {
+                return { message: '子组件内容' }
+            }
+        });
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: '父组件文本'
+            },
+            methods: {
+                handleRef: function () {
+                    alert(this.$refs.comA.message);
+                }
+            },
+            mounted: function () {
+                var _this = this;
+                bus.$on('on-message', function (msg) {
+                    console.info(msg)
+                    _this.message = msg;
+                })
+            }
+        });
+        // 2.父链：使用this.$parent.访问父级组件的数据，使用this.$children访问子组件的数据。因为耦合，不建议使用
+        // 3.子组件索引：使用ref
+    </script>
+</body>
+
+</html>
