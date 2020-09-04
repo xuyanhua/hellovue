@@ -48,3 +48,5 @@
 
 6.5. 使用slot（插槽）分发内容：[chapter06/slot.html](chapter06/slot.html)
 props传递数据、events触发事件和slot内容分发就构成了Vue组件的3个API来源，再复杂的组件也是由这3部分构成的。
+
+6.6. 组件的高级用法(递归组件、内联组件、动态组件、异步组件)：[chapter06/advanced.html](chapter06/advanced.html)

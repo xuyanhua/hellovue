@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：组件的高级用法</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1.递归组件 -->
+        <child-component :count="1"></child-component>
+        <hr>
+        <!-- 3.动态组件，通过<component>标签的is属性动态的指定要挂载的组件 -->
+        <componnent :is='currentViwe'></componnent>
+        <button @click='changeView("A")'>切换到A</button>
+        <button @click='changeView("B")'>切换到B</button>
+        <button @click='changeView("C")'>切换到C</button>
+        <hr>
+        <!-- 4.异步组件 -->
+        <child-component1></child-component1>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        Vue.component('child-component', {
+            name: 'child-component',
+            props: {
+                count: {
+                    type: Number,
+                    default: 1
+                }
+            },
+            // 1. 递归组件。用来开发一些具有未知层级关系的独立组件，例如级联选择器和树形控件。
+            template: '<div>{{count}}\
+                <child-component :count="count+1" v-if="count<3"></child-component>\
+                </div>'
+        });
+        // 4.异步组件
+        Vue.component('child-component1', function (resolve, reject) {
+            window.setInterval(function () {
+                // resolve在收到从服务器下载的组件定义时调用
+                // resolve({
+                //     template: '<div>我是异步渲染的</div>'
+                // });
+                // 也可以通过调用reject(reason)指示加载失败
+                reject('网络错误')
+            }, 2000);//时间用来模拟从网络下载组件
+        });
+        // 2.内联模板~略
+        var app = new Vue({
+            el: "#app",
+            components: {
+                comA: {
+                    template: '<div>这是组件A</div>'
+                },
+                comB: {
+                    template: '<div>这是组件B</div>'
+                },
+                comC: {
+                    template: '<div>这是组件C</div>'
+                },
+            },
+            data: {
+                currentViwe: 'comA'
+            },
+            methods: {
+                changeView: function (name) {
+                    this.currentViwe = 'com' + name
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
