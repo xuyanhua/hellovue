@@ -54,3 +54,7 @@ props传递数据、events触发事件和slot内容分发就构成了Vue组件�
 6.7. 其他($nextTick与异步更新队列、X-templates、手动挂载实例)：[chapter06/other.html](chapter06/other.html)
 
 6.8. 实战：数字输入框组件：[chapter06/numbercom](chapter06/numbercom)
+
+## 7.自定义指令
+
+7.1. 自定义指令基本用法：[chapter07/base.html](chapter07/base.html)

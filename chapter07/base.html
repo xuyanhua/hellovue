@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：自定义指令基本用法</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1.自定义指令的使用方法，v-前缀+指令名称 -->
+        <input type="text" v-focus v-test:msg.a.b="message">
+        <!-- 4.如果需要多个值，可以传一个对象111111111111111111111111111111111111111111111111 -->
+        <div v-focus v-test="{msg:'hello',name:'Aresn'}"></div>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        // 2. 全局定义方式
+        Vue.directive('focus', {
+            inserted: function (el) {
+                el.focus();
+            }
+        });
+        var app = new Vue({
+            el: "#app",
+            data: { message: "some text" },
+            directives: {
+                // 3.局部定义方式
+                test: {
+                    // 每个函数都有一些参数可用，见：https://cn.vuejs.org/v2/guide/custom-directive.html
+                    //选项如下，都是钩子函数
+                    // 3.1 指令第一次绑定到元素时调用（只有一次），例如初始化动作
+                    bind: function (el, binding, vnode) {
+                        console.log('bind...')
+                        console.log('el->' + el)
+                        // 指令名，不包含v-前缀 test
+                        console.log('binding.name->' + binding.name)
+                        // 绑定的值 some text
+                        console.log('binding.value->' + JSON.stringify(binding.value))
+                        // 绑定值的字符串形式 message
+                        console.log('binding.expression->' + binding.expression)
+                        // 传给指令的参数 msg
+                        console.log('binding.argument->' + binding.arg)
+                        // 修饰符对象 {"a":true,"b":true}
+                        console.log('binding.modifiers->' + JSON.stringify(binding.modifiers))
+                        var keys = [];
+                        for (var i in vnode) {
+                            keys.push(i)
+                        }
+                        console.log('vnode keys->' + keys.join(', '))
+                    },
+                    // 3.2 被绑定元素插入父节点时调用
+                    inserted: function () {
+                        console.log('inserted...')
+                    },
+                    // 3.3 被绑定元素所在模板更新时调用（不管绑定的值有没有改变）
+                    update: function () {
+                        console.log('update...')
+                    },
+                    // 3.4 被绑定元素所在模板完成一次更新周期时调用
+                    componentUpdated: function () {
+                        console.log('componentUpdated...')
+                    },
+                    // 3.5 指令与元素解绑时调用（只有一次）
+                    unbind: function () {
+                        console.log('unbind...')
+                    },
+
+
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
