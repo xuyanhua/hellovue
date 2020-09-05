@@ -50,3 +50,5 @@
 props传递数据、events触发事件和slot内容分发就构成了Vue组件的3个API来源，再复杂的组件也是由这3部分构成的。
 
 6.6. 组件的高级用法(递归组件、内联组件、动态组件、异步组件)：[chapter06/advanced.html](chapter06/advanced.html)
+
+6.7. 其他($nextTick与异步更新队列、X-templates、手动挂载实例)：[chapter06/other.html](chapter06/other.html)

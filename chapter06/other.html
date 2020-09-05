@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：其他($nextTick与异步队列、X-templates、手动挂载实例)</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 1. 【异步更新队列】：Vue在观察到数据变化时并不是直接更新DOM，而是开启一个队列，并缓冲在同一事件循环
+        中发生改变的所有数据的缓冲区中。在缓存时会去除重复数据，从而避免不必要的计算和DOM操作。然后在下一个事件循环
+        tick中，Vue刷新队列并执行实际（已去重的）工作。
+        所以如果用一个for循环来动态改变数据100次，其实只会应用最后一次改变。-->
+        <!-- 1. nextTick,如下，如果在同一个事件中，先显示div的内容，再获取是获取不到的，因为此时dom还没有被创建出来
+            ，需要使用$nextTick函数回调 -->
+        <div id="div" v-if="isShow">这是一段文本</div>
+        <button @click="getText">获取div内容</button>
+        <hr>
+        <my-component></my-component>
+    </div>
+    <hr>
+    <!-- 3.手动、动态地挂载实例 -->
+    <div id="mount-div"></div>
+    <script src="../vue.js"></script>
+    <!-- 2.x-templates可以使用script标签，加上type="text/x-template" id='my-component'来写模板的内容，此时就不用拼接字符串了 -->
+    <!-- 但是这种方式将模板和组件的其他定义隔离了，不建议滥用它 -->
+    <script type="text/x-template" id='my-component'>
+        <div>这是组件的内容</div>
+    </script>
+    <script>
+        Vue.component('my-component', {
+            template: '#my-component'
+        });
+        var app = new Vue({
+            el: "#app",
+            data: {
+                isShow: false
+            },
+            methods: {
+                getText: function () {
+                    this.isShow = true;
+                    // [Vue warn]: Error in v-on handler: "TypeError: Cannot read property 'innerHTML' of null"
+                    // var text = document.getElementById('div').innerHTML;
+                    this.$nextTick(function () {
+                        var text = document.getElementById('div').innerHTML;
+                        alert(text)
+                    });
+
+                }
+            }
+        });
+        // 3.手动、动态地挂载实例.有时需要动态地创建Vue实例，Vue提供了Vue.extend和$mount两个方法来手动挂载一个实例
+        // 3.1、extend是基础Vue构造器，创建一个”子类“，参数是一个包含组件对选项的对象，如果没有el选项就是”未挂载“状态
+        var MyCompontnet1 = Vue.extend({
+            template: '<div>动态实例模板：{{name}}</div>'
+            , data: function () {
+                return { name: 'Aresn' }
+            }
+        });
+        // 3.2、用$mount手动挂载一个未挂载的实例，返回实例本身，可以链式的调用其他实例方法。
+        new MyCompontnet1().$mount('#mount-div')
+    </script>
+</body>
+
+</html>
