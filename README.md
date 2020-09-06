@@ -47,7 +47,7 @@
 6.4. 任意组件的通信（非父子组件）：[chapter06/any.html](chapter06/any.html)
 
 6.5. 使用slot（插槽）分发内容：[chapter06/slot.html](chapter06/slot.html)
-props传递数据、events触发事件和slot内容分发就构成了Vue组件的3个API来源，再复杂的组件也是由这3部分构成的。
+>props传递数据、events触发事件和slot内容分发就构成了Vue组件的3个API来源，再复杂的组件也是由这3部分构成的。
 
 6.6. 组件的高级用法(递归组件、内联组件、动态组件、异步组件)：[chapter06/advanced.html](chapter06/advanced.html)
 
@@ -58,3 +58,12 @@ props传递数据、events触发事件和slot内容分发就构成了Vue组件�
 ## 7.自定义指令
 
 7.1. 自定义指令基本用法：[chapter07/base.html](chapter07/base.html)
+
+## 8.Render函数
+
+> Virtual Dom并不是真正意义上的Dom，而是一个轻量级的JavaScript对象，在状态发生变化时，Virtual Dom会进行Diff运算，来更新只需要被替换的Dom，而不是全部重绘。与Dom操作相比，Virtual Dom是基于JavaScript计算的，因此开销会小很多。  
+> Virtual Dom运行过程：  
+Object --> render(生成虚拟节点) --> createElement(h)（基于虚拟节点创建dom节点）--> diff（状态更新后，进行对比，生成补丁对象）--> patch（遍历补丁对象，更新dom节点）  
+> 使用Virtual Dom就可以完全发挥JavaScript的编程能力。在多数场景中，我们使用template就足够了，但在一些特定场景下，使用Virtual Dom会更简单。
+
+8.1. render函数入门示例-锚点标题：[chapter08/anchor.html](chapter08/anchor.html)

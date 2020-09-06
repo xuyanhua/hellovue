@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue：render函数入门示例-锚点标题组件</title>
+</head>
+
+<body>
+    <div id="app">
+        <anchor :level='1' title="一级标题">一级标题</anchor>
+        <anchor :level='2' title="二级标题">二级标题</anchor>
+        <anchor :level='3' title="三级标题">三级标题</anchor>
+        <anchor :level='4' title="四级标题">四级标题</anchor>
+        <anchor :level='5' title="五级标题">五级标题</anchor>
+        <anchor :level='6' title="六级标题">六级标题</anchor>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        Vue.component('anchor', {
+            props: {
+                title: { type: String, default: '' },
+                level: { type: Number, required: true },
+            },
+            render: function (createElement) {
+                return createElement('h' + this.level, [
+                    createElement('a',
+                        { domProps: { href: '#' + this.title } },
+                        this.$slots.default)
+                ]);
+            }
+        });
+        var app = new Vue({
+            el: "#app",
+        });
+    </script>
+</body>
+
+</html>
