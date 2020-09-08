@@ -26,15 +26,17 @@ var config = {
         rules: [
             {
                 test: /\.css$/,//当遇到.css结尾的文件时
-                use: [{
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                        // 这里可以指定一个 publicPath
-                        // 默认使用 webpackOptions.output中的publicPath
-                        publicPath: '../'
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            // 这里可以指定一个 publicPath
+                            // 默认使用 webpackOptions.output中的publicPath
+                            publicPath: '../'
+                        },
                     },
-                },
-                    'css-loader',]
+                    'css-loader',
+                ]
             }
         ]
     },
