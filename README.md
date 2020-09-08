@@ -177,3 +177,6 @@ createElement(
 ## 9. webpack
 
 9.1. webpack入门：[chapter09/demo](chapter09/demo)
+9.2. vue单文件组件与vue-loader：[chapter09/vuecom](chapter09/vuecom)
+
+## 10.vue-router
